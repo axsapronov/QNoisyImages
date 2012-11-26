@@ -118,6 +118,7 @@ void ImageToolWidget::reloadImage()
         setPixmapAndResize(pixmap);
     }*/
 
+    setPixmapAndResize(m_backuppixmap);
 }
 //------------------------------------------------------------------------------
 void ImageToolWidget::filterIndexChanged(int index)
@@ -206,7 +207,8 @@ void ImageToolWidget::setPixmapAndResize(const QPixmap &pixmap)
 {
     ui->PixmapLabel->setPixmap(pixmap);
     ui->PixmapLabel->resize(pixmap.size());
-    mypixmap = pixmap;
+    m_pixmap = pixmap;
+    m_backuppixmap = pixmap;
 }
 //------------------------------------------------------------------------------
 void ImageToolWidget::acept()
@@ -228,7 +230,7 @@ void ImageToolWidget::filterListImages(QStringList *listImages, QString *outputP
 
     QLabel overallLabel(&trainProgress);
     overallLabel.setGeometry(11, 10, 378, 20);
-    overallLabel.setText("Learning cycles progress");
+    overallLabel.setText("Operation...");
     overallLabel.show();
 
 
@@ -241,11 +243,12 @@ void ImageToolWidget::filterListImages(QStringList *listImages, QString *outputP
         QString t_last = listImages->at(i).split("/").last();
         QPixmap pixmap;
         pixmap.load(listImages->at(i));
+
         setPixmapAndResize(pixmap);
         filterImage();
 
         //        myDebug() << *outputPath + t_last;
-        mypixmap.save(*outputPath + t_last);
+        m_pixmap.save(*outputPath + t_last);
     }
 }
 //------------------------------------------------------------------------------

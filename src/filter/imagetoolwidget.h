@@ -39,7 +39,7 @@ public:
     void setPixmapAndResize(const QPixmap &pixmap);
     QImage imgToFilter;
 
-    QPixmap mypixmap;
+
 
     void filterListImages(QStringList *listImages, QString *outputPath);
 
@@ -54,6 +54,9 @@ private:
     QString m_currentFilename;
     QVector<QtImageFilter*>  m_imageFilters;
     Ui::ImageToolWidget *ui;
+
+    QPixmap m_pixmap;
+    QPixmap m_backuppixmap;
 
 };
 
