@@ -30,14 +30,17 @@
 #include <QtGui/QMessageBox>
 
 #include "imagetoolwidget.h"
+#include "ui_imagetoolwidget.h"
+
 #include "qtimagefilter.h"
 #include "mirrorfilter.h"
 
 
 ImageToolWidget::ImageToolWidget(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent),
+    ui(new Ui::ImageToolWidget)
 {
-    ui.setupUi(this);
+    ui->setupUi(this);
 
     // Register our mirror filter.
     qtRegisterImageFilter<MirrorFilter>(QLatin1String("Фильтры"));
@@ -49,23 +52,23 @@ ImageToolWidget::ImageToolWidget(QWidget *parent) :
     }
 
     for (int i = 0; i < m_imageFilters.count(); ++i) {
-        ui.FiltersCombo->addItem(m_imageFilters[i]->name());
+        ui->FiltersCombo->addItem(m_imageFilters[i]->name());
     }
 
-    ui.FiltersCombo->insertItem(0, QString(tr("Выберите фильтр")));
+    ui->FiltersCombo->insertItem(0, QString(tr("Выберите фильтр")));
 
     m_imageFilters.prepend((QtImageFilter*)0);
 
-    //  QObject::connect(ui.LoadButton, SIGNAL(clicked()), this, SLOT(loadImage()));
-    QObject::connect(ui.ReloadButton, SIGNAL(clicked()), this, SLOT(reloadImage()));
-    QObject::connect(ui.FilterButton, SIGNAL(clicked()), this, SLOT(filterImage()));
-    QObject::connect(ui.FiltersCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(filterIndexChanged(int)));
+    //  QObject::connect(ui->LoadButton, SIGNAL(clicked()), this, SLOT(loadImage()));
+    connect(ui->ReloadButton, SIGNAL(clicked()), this, SLOT(reloadImage()));
+    connect(ui->FilterButton, SIGNAL(clicked()), this, SLOT(filterImage()));
+    connect(ui->FiltersCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(filterIndexChanged(int)));
 
-    QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(acept()));
-    QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(close()));
+    connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(acept()));
+    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(close()));
 
 
-    ui.FiltersCombo->setCurrentIndex(0);
+    ui->FiltersCombo->setCurrentIndex(0);
     m_currentFilename = QLatin1String("images/qtlogo.png");
     reloadImage();
     //    setWindowTitle(tr("Фильтры - %1").arg(APP_NAME_AND_VER));
@@ -78,7 +81,7 @@ ImageToolWidget::ImageToolWidget(QWidget *parent) :
 //------------------------------------------------------------------------------
 ImageToolWidget::~ImageToolWidget()
 {
-//    delete ui;
+    delete ui;
 }
 //------------------------------------------------------------------------------
 void ImageToolWidget::loadImage()
@@ -117,31 +120,31 @@ void ImageToolWidget::reloadImage()
 void ImageToolWidget::filterIndexChanged(int index)
 {
     if (index == 0 || index >= m_imageFilters.count()) {
-        ui.FilterButton->setToolTip(QLatin1String("No image filter chosen"));
-        ui.FilterButton->setEnabled(false);
-        ui.gbBorderPolicy->setVisible( false );
-        ui.gbChannels->setVisible( false );
-        ui.gbMirror->setVisible( false );
+        ui->FilterButton->setToolTip(QLatin1String("No image filter chosen"));
+        ui->FilterButton->setEnabled(false);
+        ui->gbBorderPolicy->setVisible( false );
+        ui->gbChannels->setVisible( false );
+        ui->gbMirror->setVisible( false );
     } else {
         QtImageFilter *filter = m_imageFilters[index];
-        ui.FilterButton->setToolTip(filter->description());
-        ui.FilterButton->setEnabled(true);
-        ui.gbBorderPolicy->setVisible( filter->supportsOption(QtImageFilter::FilterBorderPolicy)  );
-        ui.gbChannels->setVisible( filter->supportsOption(QtImageFilter::FilterChannels)  );
-        ui.gbMirror->setVisible( filter->supportsOption(MirrorFilter::MirrorHorizontal) || filter->supportsOption(MirrorFilter::MirrorVertical) );
+        ui->FilterButton->setToolTip(filter->description());
+        ui->FilterButton->setEnabled(true);
+        ui->gbBorderPolicy->setVisible( filter->supportsOption(QtImageFilter::FilterBorderPolicy)  );
+        ui->gbChannels->setVisible( filter->supportsOption(QtImageFilter::FilterChannels)  );
+        ui->gbMirror->setVisible( filter->supportsOption(MirrorFilter::MirrorHorizontal) || filter->supportsOption(MirrorFilter::MirrorVertical) );
     }
 }
 //------------------------------------------------------------------------------
 void ImageToolWidget::filterImage()
 {
 
-    if (ui.PixmapLabel->pixmap() == 0) {
+    if (ui->PixmapLabel->pixmap() == 0) {
         QMessageBox::information(this, "QImageTool", "Sorry, you must load an image first\n");
     } else {
         setCursor(Qt::WaitCursor);
-        // QImage imgToFilter = ui.PixmapLabel->pixmap()->toImage();
-        imgToFilter = ui.PixmapLabel->pixmap()->toImage();
-        QtImageFilter *filter = m_imageFilters[ui.FiltersCombo->currentIndex()];
+        // QImage imgToFilter = ui->PixmapLabel->pixmap()->toImage();
+        imgToFilter = ui->PixmapLabel->pixmap()->toImage();
+        QtImageFilter *filter = m_imageFilters[ui->FiltersCombo->currentIndex()];
         if (filter->name() == "Punch") {
             filter->setOption(QtImageFilter::Radius, qMin(imgToFilter.width(), imgToFilter.height())/2);
             filter->setOption(QtImageFilter::Center, QPointF(imgToFilter.width()/2.0,imgToFilter.height()/2.0));
@@ -159,22 +162,22 @@ void ImageToolWidget::filterImage()
 
         }
         if (filter->supportsOption(MirrorFilter::MirrorHorizontal))
-            filter->setOption(MirrorFilter::MirrorHorizontal, ui.ckHorizontal->isChecked() );
+            filter->setOption(MirrorFilter::MirrorHorizontal, ui->ckHorizontal->isChecked() );
         if (filter->supportsOption(MirrorFilter::MirrorVertical))
-            filter->setOption(MirrorFilter::MirrorVertical, ui.ckVertical->isChecked());
+            filter->setOption(MirrorFilter::MirrorVertical, ui->ckVertical->isChecked());
 
         if (filter->supportsOption(QtImageFilter::FilterChannels)) {
-            QString rgba = ui.ckRed->isChecked() ? "r" : "";
-            rgba+= ui.ckGreen->isChecked() ? "g" : "";
-            rgba+= ui.ckBlue->isChecked() ? "b" : "";
-            rgba+= ui.ckAlpha->isChecked() ? "a" : "";
+            QString rgba = ui->ckRed->isChecked() ? "r" : "";
+            rgba+= ui->ckGreen->isChecked() ? "g" : "";
+            rgba+= ui->ckBlue->isChecked() ? "b" : "";
+            rgba+= ui->ckAlpha->isChecked() ? "a" : "";
             filter->setOption(QtImageFilter::FilterChannels, rgba);
         }
 
         if (filter->supportsOption(QtImageFilter::FilterBorderPolicy)) {
             QString borderPolicy;
-            if (ui.rbExtend->isChecked()) borderPolicy = "Extend";
-            else if (ui.rbMirror->isChecked()) borderPolicy = "Mirror";
+            if (ui->rbExtend->isChecked()) borderPolicy = "Extend";
+            else if (ui->rbMirror->isChecked()) borderPolicy = "Mirror";
             else borderPolicy = "Wrap";
             filter->setOption(QtImageFilter::FilterBorderPolicy, borderPolicy);
         }
@@ -188,8 +191,8 @@ void ImageToolWidget::filterImage()
 //------------------------------------------------------------------------------
 void ImageToolWidget::setPixmapAndResize(const QPixmap &pixmap)
 {
-    ui.PixmapLabel->setPixmap(pixmap);
-    ui.PixmapLabel->resize(pixmap.size());
+    ui->PixmapLabel->setPixmap(pixmap);
+    ui->PixmapLabel->resize(pixmap.size());
     mypixmap = pixmap;
 }
 //------------------------------------------------------------------------------

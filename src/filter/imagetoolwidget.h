@@ -27,7 +27,9 @@
 #include <QtCore/QVector>
 #include "qtimagefilter.h"
 
-#include "ui_filterdialog.h"
+namespace Ui {
+    class ImageToolWidget;
+}
 
 class ImageToolWidget : public QWidget {
     Q_OBJECT
@@ -49,7 +51,7 @@ public slots:
 private:
     QString m_currentFilename;
     QVector<QtImageFilter*>  m_imageFilters;
-    Ui::Form ui;
+    Ui::ImageToolWidget *ui;
 
 };
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>ImageToolWidget</class>
+ <widget class="QWidget" name="ImageToolWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -274,7 +274,7 @@
   <connection>
    <sender>pushButton</sender>
    <signal>clicked()</signal>
-   <receiver>Form</receiver>
+   <receiver>ImageToolWidget</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">

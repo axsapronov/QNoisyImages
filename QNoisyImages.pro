@@ -38,7 +38,7 @@ HEADERS += \
 FORMS += \
             src/main/mainwindow.ui \
             src/dialogs/about/about.ui \
-            src/filter/filterdialog.ui
+            src/filter/imagetoolwidget.ui
 
 SOURCES += \
             src/debughelper/debughelper.cpp \
