@@ -2,13 +2,17 @@
 
 *.slo
 *.lo
-*.o
-*.a
+#*.o
+#*.a
 *.la
 *.lai
-*.so
+#*.so
 *.dll
 *.dylib
+
+# vim 
+*.swp
+*.*~
 
 # Qt-es
 
