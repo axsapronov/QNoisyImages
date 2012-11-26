@@ -14,11 +14,13 @@
 #include "mainwindow.h" ///
 #include "about.h" /// aboutdialog
 #include "debughelper.h"
+#include "filecommon.h"
 
 #include <QDesktopServices>
 #include <QDesktopWidget> /// moved to center
 #include <QUrl>
 #include <QFileDialog>
+#include <QStringListModel>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -38,11 +40,22 @@ MainWindow::MainWindow(QWidget *parent) :
                rect.height() / 2 - this->height() / 2);
     /// maximized
     //    this->showMaximized();
+
+    debug();
 }
 //------------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
+    typeModel->deleteLater();
     delete ui;
+}
+//------------------------------------------------------------------------------
+void MainWindow::debug()
+{
+    QString t_str;
+    t_str = "/home/warmonger/Pictures/wallp";
+    ui->LEInputFolder->setText(t_str);
+    loadListFilesToTable();
 }
 //------------------------------------------------------------------------------
 void MainWindow::createConnects()
@@ -160,6 +173,10 @@ void MainWindow::aboutOpenSite()
 void MainWindow::generateImages()
 {
     myDebug() << "begin generate";
+    for (int i = 0; i < typeModel->rowCount(); i++)
+    {
+        myDebug() << typeModel->data(typeModel->index(i, 0), 0).toString();
+    }
 }
 //------------------------------------------------------------------------------
 void MainWindow::setInputFolder()
@@ -173,6 +190,7 @@ void MainWindow::setInputFolder()
     {
         ui->LEInputFolder->setText(directory);
         ui->LEOutputFolder->setText(directory + "/output/");
+        loadListFilesToTable();
     }
 }
 //------------------------------------------------------------------------------
@@ -185,6 +203,18 @@ void MainWindow::setOutputFolder()
                                                           , options);
     if (!directory.isEmpty())
         ui->LEInputFolder->setText(directory);
+}
+//------------------------------------------------------------------------------
+void MainWindow::loadListFilesToTable()
+{
+    QStringList t_list = recursiveFind(ui->LEInputFolder->text());
+    QStringList items;
+    for (int i = 0; i < t_list.size(); i++)
+    {
+        items << QString(t_list.at(i).split("/").last());
+    }
+    typeModel = new QStringListModel(items, this);
+    ui->listFiles->setModel(typeModel);
 }
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

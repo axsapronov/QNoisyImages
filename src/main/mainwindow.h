@@ -12,6 +12,7 @@ QT_BEGIN_NAMESPACE
 class AboutDialog;
 class QAction;
 class QMenu;
+class QStringListModel;
 QT_END_NAMESPACE
 
 
@@ -66,6 +67,13 @@ private:
     void createConnects();
     void createTrayIcon();
     void createActions();
+
+    void loadListFilesToTable();
+
+    void debug();
+
+    QStringListModel *typeModel;
+
 };
 
 #endif // MAINWINDOW_H

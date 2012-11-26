@@ -22,14 +22,16 @@ INCLUDEPATH += . \
         src/debughelper \
         src/main \
         src/dialogs/about \
-        src/defines
+        src/defines \
+        src/common
 
 # Input
 HEADERS += \
             src/debughelper/debughelper.h \
             src/defines/defines.h \
             src/main/mainwindow.h \
-            src/dialogs/about/about.h
+            src/dialogs/about/about.h\
+            src/common/filecommon.h
 
 FORMS += \
             src/main/mainwindow.ui \
@@ -39,7 +41,8 @@ SOURCES += \
             src/debughelper/debughelper.cpp \
             src/main/main.cpp \
             src/main/mainwindow.cpp\
-            src/dialogs/about/about.cpp
+            src/dialogs/about/about.cpp \
+            src/common/filecommon.cpp
 
 RESOURCES += \
     resources/resources.qrc
