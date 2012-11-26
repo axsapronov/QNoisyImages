@@ -51,6 +51,8 @@ private slots:
      */
     void setOutputFolder();
 
+    void loadImageForPreviewFilter(QModelIndex ind);
+
 private:
     Ui::MainWindow *ui;
 

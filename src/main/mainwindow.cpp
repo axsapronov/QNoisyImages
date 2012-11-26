@@ -60,8 +60,6 @@ void MainWindow::debug()
     t_str = "/home/warmonger/Pictures/wallp";
     ui->LEInputFolder->setText(t_str);
     loadListFilesToTable();
-
-
 }
 //------------------------------------------------------------------------------
 void MainWindow::createConnects()
@@ -91,6 +89,8 @@ void MainWindow::createConnects()
     connect(ui->action_About_About, SIGNAL(triggered()), about, SLOT(show()));
     connect(ui->action_About_About_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(ui->action_About_Site, SIGNAL(triggered()), this, SLOT(aboutOpenSite()));
+
+    connect(ui->listFiles, SIGNAL(activated(QModelIndex)), SLOT(loadImageForPreviewFilter(QModelIndex)));
 }
 //------------------------------------------------------------------------------
 void MainWindow::showHide(QSystemTrayIcon::ActivationReason r)
@@ -223,4 +223,16 @@ void MainWindow::loadListFilesToTable()
     ui->listFiles->setModel(typeModel);
 }
 //------------------------------------------------------------------------------
+void MainWindow::loadImageForPreviewFilter(QModelIndex ind)
+{
+    QString t_str = ui->LEInputFolder->text()
+            + "/"
+            + typeModel->data(ind, 0).toString();
+    QImage img;
+    if(img.load(t_str))
+    {
+        QPixmap pixmap = QPixmap::fromImage(img);
+        GUI_Filters->setPixmapAndResize(pixmap);
+    }
+}
 //------------------------------------------------------------------------------

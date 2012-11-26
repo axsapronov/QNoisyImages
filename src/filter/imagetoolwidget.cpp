@@ -59,7 +59,7 @@ ImageToolWidget::ImageToolWidget(QWidget *parent) :
 
     m_imageFilters.prepend((QtImageFilter*)0);
 
-    //  QObject::connect(ui->LoadButton, SIGNAL(clicked()), this, SLOT(loadImage()));
+    //connect(ui->LoadButton, SIGNAL(clicked()), this, SLOT(loadImage()));
     connect(ui->ReloadButton, SIGNAL(clicked()), this, SLOT(reloadImage()));
     connect(ui->FilterButton, SIGNAL(clicked()), this, SLOT(filterImage()));
     connect(ui->FiltersCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(filterIndexChanged(int)));
