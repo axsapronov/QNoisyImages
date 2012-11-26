@@ -10,6 +10,8 @@ DEPENDPATH += . \
         src/defines \
         src/main
 
+
+
 DESTDIR     = build/bin
 OBJECTS_DIR = build/obj
 MOC_DIR     = build/moc
@@ -46,3 +48,10 @@ RESOURCES += \
 #    resources/lang/QNoisyImages_ru.ts \
 #    resources/lang/QNoisyImages_de.ts \
 #    resources/lang/QNoisyImages_fr.ts
+
+## filters and lib for
+
+include(./src/filter/qtimagefilters.pri)
+LIBS  = -L/plugins/
+
+
