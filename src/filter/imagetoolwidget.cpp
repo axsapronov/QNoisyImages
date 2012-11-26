@@ -32,22 +32,12 @@
 #include "imagetoolwidget.h"
 #include "qtimagefilter.h"
 #include "mirrorfilter.h"
-#include "global.h"
-#include "paintarea.h"
+
 
 ImageToolWidget::ImageToolWidget(QWidget *parent) :
-        QWidget(parent)//,
-     //   paintArea(new PaintArea)
+    QWidget(parent)
 {
-
-    QTextCodec *codec = QTextCodec::codecForName("UTF8");  // назначаем кодировку для всех надписей
-    QTextCodec::setCodecForTr(codec);
-
-
-kilops = false;
-kilops2 = false;
     ui.setupUi(this);
-
 
     // Register our mirror filter.
     qtRegisterImageFilter<MirrorFilter>(QLatin1String("Фильтры"));
@@ -66,32 +56,31 @@ kilops2 = false;
 
     m_imageFilters.prepend((QtImageFilter*)0);
 
-  //  QObject::connect(ui.LoadButton, SIGNAL(clicked()), this, SLOT(loadImage()));
+    //  QObject::connect(ui.LoadButton, SIGNAL(clicked()), this, SLOT(loadImage()));
     QObject::connect(ui.ReloadButton, SIGNAL(clicked()), this, SLOT(reloadImage()));
     QObject::connect(ui.FilterButton, SIGNAL(clicked()), this, SLOT(filterImage()));
     QObject::connect(ui.FiltersCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(filterIndexChanged(int)));
 
-   QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(acept()));
+    QObject::connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(acept()));
     QObject::connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(close()));
-    
+
 
     ui.FiltersCombo->setCurrentIndex(0);
     m_currentFilename = QLatin1String("images/qtlogo.png");
     reloadImage();
-    setWindowTitle(tr("Фильтры - %1").arg(APP_NAME_AND_VER));
+    //    setWindowTitle(tr("Фильтры - %1").arg(APP_NAME_AND_VER));
+    setWindowTitle("Filters");
 
-//paintArea = new PaintArea;
-
-   // setPixmapAndResize(QPixmap::fromImage(paintArea->theImage));
-  //  mypixmap = new QPixmap;
+    // setPixmapAndResize(QPixmap::fromImage(paintArea->theImage));
+    //  mypixmap = new QPixmap;
 
 }
-
+//------------------------------------------------------------------------------
 ImageToolWidget::~ImageToolWidget()
 {
-
+//    delete ui;
 }
-
+//------------------------------------------------------------------------------
 void ImageToolWidget::loadImage()
 {
     QList<QByteArray> formats = QImageReader::supportedImageFormats();
@@ -103,10 +92,10 @@ void ImageToolWidget::loadImage()
     }
     strFormats = "Images (" + strFormats + ")";
     QString s = QFileDialog::getOpenFileName(
-            this,
-            "Choose a file",
-            QString(),
-            strFormats);
+                this,
+                "Choose a file",
+                QString(),
+                strFormats);
     QImage img;
     if(img.load(s)) {
         m_currentFilename = s;
@@ -114,18 +103,17 @@ void ImageToolWidget::loadImage()
         setPixmapAndResize(pixmap);
     }
 }
-
+//------------------------------------------------------------------------------
 void ImageToolWidget::reloadImage()
 {
-  /*  QImage img;
+    /*  QImage img;
     if(img.load(m_currentFilename)) {
         QPixmap pixmap = QPixmap::fromImage(img);
         setPixmapAndResize(pixmap);
     }*/
 
-    kilops2 = true;
 }
-
+//------------------------------------------------------------------------------
 void ImageToolWidget::filterIndexChanged(int index)
 {
     if (index == 0 || index >= m_imageFilters.count()) {
@@ -143,7 +131,7 @@ void ImageToolWidget::filterIndexChanged(int index)
         ui.gbMirror->setVisible( filter->supportsOption(MirrorFilter::MirrorHorizontal) || filter->supportsOption(MirrorFilter::MirrorVertical) );
     }
 }
-
+//------------------------------------------------------------------------------
 void ImageToolWidget::filterImage()
 {
 
@@ -151,7 +139,7 @@ void ImageToolWidget::filterImage()
         QMessageBox::information(this, "QImageTool", "Sorry, you must load an image first\n");
     } else {
         setCursor(Qt::WaitCursor);
-       // QImage imgToFilter = ui.PixmapLabel->pixmap()->toImage();
+        // QImage imgToFilter = ui.PixmapLabel->pixmap()->toImage();
         imgToFilter = ui.PixmapLabel->pixmap()->toImage();
         QtImageFilter *filter = m_imageFilters[ui.FiltersCombo->currentIndex()];
         if (filter->name() == "Punch") {
@@ -193,23 +181,20 @@ void ImageToolWidget::filterImage()
 
         imgToFilter = filter->apply(imgToFilter);
         setCursor(Qt::ArrowCursor);
-       setPixmapAndResize(QPixmap::fromImage(imgToFilter));
-      // setPixmapAndResize(QPixmap::fromImage(paintArea->theImage));
+        setPixmapAndResize(QPixmap::fromImage(imgToFilter));
+        // setPixmapAndResize(QPixmap::fromImage(paintArea->theImage));
     }
 }
-
+//------------------------------------------------------------------------------
 void ImageToolWidget::setPixmapAndResize(const QPixmap &pixmap)
 {
     ui.PixmapLabel->setPixmap(pixmap);
     ui.PixmapLabel->resize(pixmap.size());
     mypixmap = pixmap;
-
 }
-
-
+//------------------------------------------------------------------------------
 void ImageToolWidget::acept()
 {
-kilops = true;
-close();
-
+    close();
 }
+//------------------------------------------------------------------------------

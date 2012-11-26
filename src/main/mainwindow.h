@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QSystemTrayIcon>
+#include "imagetoolwidget.h"
 
 namespace Ui {
     class MainWindow;
@@ -63,6 +64,8 @@ private:
     QAction *maximizeAction;
     QAction *restoreAction;
     QAction *quitAction;
+
+    ImageToolWidget *GUI_Filters;
 
     void createConnects();
     void createTrayIcon();

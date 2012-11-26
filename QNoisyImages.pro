@@ -23,7 +23,8 @@ INCLUDEPATH += . \
         src/main \
         src/dialogs/about \
         src/defines \
-        src/common
+        src/common \
+        src/filter
 
 # Input
 HEADERS += \
@@ -31,18 +32,21 @@ HEADERS += \
             src/defines/defines.h \
             src/main/mainwindow.h \
             src/dialogs/about/about.h\
-            src/common/filecommon.h
+            src/common/filecommon.h \
+            src/filter/imagetoolwidget.h
 
 FORMS += \
             src/main/mainwindow.ui \
-            src/dialogs/about/about.ui
+            src/dialogs/about/about.ui \
+            src/filter/filterdialog.ui
 
 SOURCES += \
             src/debughelper/debughelper.cpp \
             src/main/main.cpp \
             src/main/mainwindow.cpp\
             src/dialogs/about/about.cpp \
-            src/common/filecommon.cpp
+            src/common/filecommon.cpp \
+            src/filter/imagetoolwidget.cpp
 
 RESOURCES += \
     resources/resources.qrc

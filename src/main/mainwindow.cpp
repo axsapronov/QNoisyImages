@@ -47,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     typeModel->deleteLater();
+    delete GUI_Filters;
     delete ui;
 }
 //------------------------------------------------------------------------------
@@ -56,6 +57,9 @@ void MainWindow::debug()
     t_str = "/home/warmonger/Pictures/wallp";
     ui->LEInputFolder->setText(t_str);
     loadListFilesToTable();
+
+    GUI_Filters = new ImageToolWidget();
+    GUI_Filters->show();
 }
 //------------------------------------------------------------------------------
 void MainWindow::createConnects()
