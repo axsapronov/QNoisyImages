@@ -109,39 +109,6 @@
     <addaction name="separator"/>
     <addaction name="action_File_Close"/>
    </widget>
-   <widget class="QMenu" name="mView">
-    <property name="title">
-     <string>View</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="mSettings">
-    <property name="title">
-     <string>Settings</string>
-    </property>
-    <widget class="QMenu" name="mSettingsLanguage">
-     <property name="title">
-      <string>Language</string>
-     </property>
-     <addaction name="action_Settings_Language_Russian"/>
-     <addaction name="action_Settings_Language_France"/>
-     <addaction name="action_Settings_Language_English"/>
-     <addaction name="action_Settings_Language_Deutsch"/>
-    </widget>
-    <addaction name="action_Settings_General"/>
-    <addaction name="mSettingsLanguage"/>
-    <addaction name="separator"/>
-    <addaction name="action_Settings_Module"/>
-    <addaction name="action_Settings_Lan"/>
-    <addaction name="action_Settings_Font"/>
-   </widget>
-   <widget class="QMenu" name="mSearch">
-    <property name="title">
-     <string>Search</string>
-    </property>
-    <addaction name="action_Search_Find"/>
-    <addaction name="action_Search_Find_More"/>
-    <addaction name="action_Search_Find_and_replace"/>
-   </widget>
    <widget class="QMenu" name="mAbout">
     <property name="title">
      <string>About</string>
@@ -153,9 +120,6 @@
     <addaction name="action_About_Site"/>
    </widget>
    <addaction name="mFile"/>
-   <addaction name="mView"/>
-   <addaction name="mSettings"/>
-   <addaction name="mSearch"/>
    <addaction name="mAbout"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
