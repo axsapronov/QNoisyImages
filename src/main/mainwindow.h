@@ -36,6 +36,19 @@ private slots:
 
     void aboutOpenSite();
 
+    /**
+     * @brief generateImages
+     */
+    void generateImages();
+    /**
+     * @brief setInputFolder
+     */
+    void setInputFolder();
+    /**
+     * @brief setOutputFolder
+     */
+    void setOutputFolder();
+
 private:
     Ui::MainWindow *ui;
 
