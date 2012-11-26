@@ -41,6 +41,8 @@ public:
 
     QPixmap mypixmap;
 
+    void filterListImages(QStringList *listImages, QString *outputPath);
+
 public slots:
     void loadImage();
     void reloadImage();

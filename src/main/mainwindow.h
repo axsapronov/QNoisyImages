@@ -59,6 +59,8 @@ private:
     //about
     AboutDialog *about;    // about dialog
 
+    QStringList m_listFiles;
+
     //tray
     QSystemTrayIcon *trIcon;
     QMenu *trayIconMenu;

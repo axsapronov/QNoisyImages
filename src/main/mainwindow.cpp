@@ -57,8 +57,11 @@ MainWindow::~MainWindow()
 void MainWindow::debug()
 {
     QString t_str;
-    t_str = "/home/warmonger/Pictures/wallp";
+    t_str = "/home/warmonger/Pictures/test";
     ui->LEInputFolder->setText(t_str);
+
+    t_str = "/home/warmonger/Pictures/test/output/";
+    ui->LEOutputFolder->setText(t_str);
     loadListFilesToTable();
 }
 //------------------------------------------------------------------------------
@@ -178,11 +181,13 @@ void MainWindow::aboutOpenSite()
 //------------------------------------------------------------------------------
 void MainWindow::generateImages()
 {
-    myDebug() << "begin generate";
-    for (int i = 0; i < typeModel->rowCount(); i++)
-    {
-        myDebug() << typeModel->data(typeModel->index(i, 0), 0).toString();
-    }
+//    myDebug() << "begin generate";
+    QString t_str = ui->LEOutputFolder->text();
+    GUI_Filters->filterListImages(&m_listFiles, &t_str);
+//    for (int i = 0; i < typeModel->rowCount(); i++)
+//    {
+//        myDebug() << typeModel->data(typeModel->index(i, 0), 0).toString();
+//    }
 }
 //------------------------------------------------------------------------------
 void MainWindow::setInputFolder()
@@ -213,11 +218,11 @@ void MainWindow::setOutputFolder()
 //------------------------------------------------------------------------------
 void MainWindow::loadListFilesToTable()
 {
-    QStringList t_list = recursiveFind(ui->LEInputFolder->text());
+    m_listFiles = recursiveFind(ui->LEInputFolder->text());
     QStringList items;
-    for (int i = 0; i < t_list.size(); i++)
+    for (int i = 0; i < m_listFiles.size(); i++)
     {
-        items << QString(t_list.at(i).split("/").last());
+        items << QString(m_listFiles.at(i).split("/").last());
     }
     typeModel = new QStringListModel(items, this);
     ui->listFiles->setModel(typeModel);
