@@ -64,8 +64,8 @@ ImageToolWidget::ImageToolWidget(QWidget *parent) :
     connect(ui->FilterButton, SIGNAL(clicked()), this, SLOT(filterImage()));
     connect(ui->FiltersCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(filterIndexChanged(int)));
 
-    connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(acept()));
-    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(close()));
+//    connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(acept()));
+//    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(close()));
 
 
     ui->FiltersCombo->setCurrentIndex(0);

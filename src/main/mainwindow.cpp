@@ -34,12 +34,15 @@ MainWindow::MainWindow(QWidget *parent) :
     createConnects(); // moved func
     trIcon->show();  //display tray
 
+    GUI_Filters = new ImageToolWidget();
+    ui->rightDockWidget->setWidget(GUI_Filters);
+
     /// moved to center desktop
-    QRect rect = QApplication::desktop()->availableGeometry(this);
-    this->move(rect.width() / 2 - this->width() / 2,
-               rect.height() / 2 - this->height() / 2);
+//    QRect rect = QApplication::desktop()->availableGeometry(this);
+//    this->move(rect.width() / 2 - this->width() / 2,
+//               rect.height() / 2 - this->height() / 2);
     /// maximized
-    //    this->showMaximized();
+        this->showMaximized();
 
     debug();
 }
@@ -58,8 +61,7 @@ void MainWindow::debug()
     ui->LEInputFolder->setText(t_str);
     loadListFilesToTable();
 
-    GUI_Filters = new ImageToolWidget();
-    GUI_Filters->show();
+
 }
 //------------------------------------------------------------------------------
 void MainWindow::createConnects()
