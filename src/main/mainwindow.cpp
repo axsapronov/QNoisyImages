@@ -38,11 +38,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->rightDockWidget->setWidget(GUI_Filters);
 
     /// moved to center desktop
-//    QRect rect = QApplication::desktop()->availableGeometry(this);
-//    this->move(rect.width() / 2 - this->width() / 2,
-//               rect.height() / 2 - this->height() / 2);
+    //    QRect rect = QApplication::desktop()->availableGeometry(this);
+    //    this->move(rect.width() / 2 - this->width() / 2,
+    //               rect.height() / 2 - this->height() / 2);
     /// maximized
-        this->showMaximized();
+    this->showMaximized();
 
     debug();
 }
@@ -181,13 +181,13 @@ void MainWindow::aboutOpenSite()
 //------------------------------------------------------------------------------
 void MainWindow::generateImages()
 {
-//    myDebug() << "begin generate";
+    //    myDebug() << "begin generate";
     QString t_str = ui->LEOutputFolder->text();
     GUI_Filters->filterListImages(&m_listFiles, &t_str);
-//    for (int i = 0; i < typeModel->rowCount(); i++)
-//    {
-//        myDebug() << typeModel->data(typeModel->index(i, 0), 0).toString();
-//    }
+    //    for (int i = 0; i < typeModel->rowCount(); i++)
+    //    {
+    //        myDebug() << typeModel->data(typeModel->index(i, 0), 0).toString();
+    //    }
 }
 //------------------------------------------------------------------------------
 void MainWindow::setInputFolder()
@@ -213,7 +213,7 @@ void MainWindow::setOutputFolder()
                                                           , ""
                                                           , options);
     if (!directory.isEmpty())
-        ui->LEInputFolder->setText(directory);
+        ui->LEPutputFolder->setText(directory);
 }
 //------------------------------------------------------------------------------
 void MainWindow::loadListFilesToTable()
